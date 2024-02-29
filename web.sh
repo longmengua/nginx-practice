@@ -11,8 +11,8 @@ function common_steps {
     git pull
 
     # Step 2
-    echo "===> Check version in composer.json"
-    json_file="./composer.json"
+    echo "===> Check version in package.json"
+    json_file="./vue-app/package.json"
     if [ ! -f "$json_file" ]; then
         display_error "File not found: $json_file"
     fi

@@ -11,8 +11,8 @@ function common_steps {
     git pull
 
     # Step 2
-    echo "===> Check version in composer.json"
-    json_file="./composer.json"
+    echo "===> Check version in package.json"
+    json_file="./nest-server/package.json"
     if [ ! -f "$json_file" ]; then
         display_error "File not found: $json_file"
     fi
@@ -24,7 +24,7 @@ function common_steps {
 function launchNestServer {
   cd nest-server
   docker build -t nest-server .
-  docker rm -f nest-server && docker run -d -p 3000:3000 --name nest-server --network nginx-net nest-server
+  docker rm -f nest-server && docker run -d -p 3000:3000 -p 3001:3001 --name nest-server --network nginx-net nest-server
 }
 
 common_steps
