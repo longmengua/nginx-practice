@@ -1,5 +1,10 @@
 # nginx-practice
 
+## note
+
+- if using docker container to launch servers, then you need to create network for them, otherwise cannot connect to each, and there is a way without ip address to connect to another server, using {container name}:{port}
+  - in this case, it is nest-server:3000
+
 ## docker
 
 - network
