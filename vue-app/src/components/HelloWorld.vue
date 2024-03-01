@@ -3,40 +3,55 @@
     <h1>WebSocket Example</h1>
     <p v-if="connected">Connected to WebSocket server!</p>
     <p v-else>Not connected to WebSocket server.</p>
+    <div id="app">
+    <div id="messages">
+      <div v-for="message in messages" :key="message.id">{{ message.text }}</div>
+    </div>
+    <input type="text" v-model="newMessage" placeholder="Type your message...">
+    <button @click="sendMessage">Send</button>
+  </div>
   </div>
 </template>
 
 <script>
+import { io } from 'socket.io-client'
+
 export default {
   data() {
     return {
       connected: false,
-      socket: null
+      socket: null,
+      messages: [],
+      newMessage: '',
     };
   },
   mounted() {
-    // Establish WebSocket connection
-    this.socket = new WebSocket("ws://" + window.location.host + "/websocket");
-
+    this.socket = io('http://localhost:8000');
+        
     this.socket.onopen = () => {
-      console.log("WebSocket connected");
-      this.connected = true;
+      this.connected = true
+      console.log('WebSocket connection established');
     };
-
-    this.socket.onclose = () => {
-      console.log("WebSocket closed");
-      this.connected = false;
-    };
-
+    
     this.socket.onerror = (error) => {
-      console.error("WebSocket error:", error);
-      this.connected = false;
+      console.error('WebSocket error:', error);
+    };
+    
+    this.socket.onmessage = (event) => {
+      this.messages.push({ id: Date.now(), text: event.data });
     };
   },
   beforeUnmount() {
     // Close WebSocket connection before component is unmounted
-    if (this.socket) {
+    if (this.socket && this.socket.readyState === WebSocket.OPEN) {
       this.socket.close();
+    }
+  },
+  methods: {
+    sendMessage() {
+      if (this.newMessage.trim() === '') return;
+      this.socket.send(this.newMessage);
+      this.newMessage = '';
     }
   }
 };

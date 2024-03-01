@@ -1,7 +1,7 @@
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
+import { AppModule } from '../../src/app.module';
 import { io, Socket } from 'socket.io-client';
-import { AppModule } from './../src/app.module';
 
 describe('EventsGateway', () => {
   let app: INestApplication;
@@ -17,7 +17,7 @@ describe('EventsGateway', () => {
   });
 
   beforeEach(done => {
-    socket = io('http://localhost:8000');
+    socket = io('http://localhost:3000');
     socket.on('connect', () => {
       done();
     });
