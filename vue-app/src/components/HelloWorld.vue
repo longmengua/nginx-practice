@@ -28,29 +28,29 @@ export default {
   mounted() {
     this.socket = io('http://localhost:8000');
         
-    this.socket.onopen = () => {
+    this.socket.on('connect', () => {
       this.connected = true
       console.log('WebSocket connection established');
-    };
+    });
     
-    this.socket.onerror = (error) => {
+    this.socket.on('error', (error) => {
       console.error('WebSocket error:', error);
-    };
+    });
     
-    this.socket.onmessage = (event) => {
-      this.messages.push({ id: Date.now(), text: event.data });
-    };
+    this.socket.on('message', (message) => {
+      this.messages.push({ id: Date.now(), text: message });
+    });
   },
   beforeUnmount() {
     // Close WebSocket connection before component is unmounted
-    if (this.socket && this.socket.readyState === WebSocket.OPEN) {
+    if (this.socket && this.socket.connected) {
       this.socket.close();
     }
   },
   methods: {
     sendMessage() {
       if (this.newMessage.trim() === '') return;
-      this.socket.send(this.newMessage);
+      this.socket.emit('message', this.newMessage);
       this.newMessage = '';
     }
   }
