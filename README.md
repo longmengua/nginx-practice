@@ -1,17 +1,20 @@
 # nginx-practice
 
-## note
+## Note
 
-- if using docker container to launch servers, then you need to create network for them, otherwise cannot connect to each, and there is a way without ip address to connect to another server, using {container name}:{port}
-  - in this case, it is nest-server:3000
+- If using Docker containers to launch servers, you need to create a network for them; otherwise, they cannot connect to each other. There is a way to connect to another server without using an IP address, by using {container name}:{port}.
+  - In this case, it is `nest-server:3000`.
+- To test a WebSocket connection, use the following website:
+  - [WebSocketKing](https://websocketking.com/)
+    - In this case, the connecting URL will be `ws://localhost:80/websocket`.
 
-## docker
+## Docker
 
-- network
-  - docker network create nginx-net
-- vue-app
-  - docker build -t vue-app .
-  - docker rm -f vue-app && docker run -d -p 80:80 --name vue-app --network nginx-net vue-app 
-- nest-server
-  - docker build -t nest-server .
-  - docker rm -f nest-server && docker run -d -p 3000:3000 --name nest-server --network nginx-net nest-server
+- Network
+  - `docker network create nginx-net`
+- Vue app
+  - `docker build -t vue-app .`
+  - `docker rm -f vue-app && docker run -d -p 80:80 --name vue-app --network nginx-net vue-app`
+- Nest server
+  - `docker build -t nest-server .`
+  - `docker rm -f nest-server && docker run -d -p 3000:3000 --name nest-server --network nginx-net nest-server`
