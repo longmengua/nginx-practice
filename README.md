@@ -2,7 +2,8 @@
 
 ## Note
 
-- If using Docker containers to launch servers, you need to create a network for them; otherwise, they cannot connect to each other. There is a way to connect to another server without using an IP address, by using {container name}:{port}.
+- If using Docker containers to launch servers, you need to create a network for them; otherwise, they cannot connect to each other.
+- There is a way to connect to another server without using an IP address, by using {container name}:{port}.
   - In this case, it is `nest-server:3000`.
 - To test a WebSocket connection, use the following website:
   - [WebSocketKing](https://websocketking.com/)
