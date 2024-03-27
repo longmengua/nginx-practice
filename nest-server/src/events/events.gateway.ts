@@ -7,6 +7,7 @@ import { Server } from 'ws';
   cors: {
     origin: '*',
   },
+  path: '/websocket' // 添加 WebSocket 路径
 })
 export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit {
   @WebSocketServer()

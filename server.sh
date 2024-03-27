@@ -24,7 +24,7 @@ function common_steps {
 function launchNestServer {
   cd nest-server
   docker build -t nest-server .
-  docker rm -f nest-server && docker run -d -p 3000:3000 -p 3001:3001 --name nest-server --network nginx-net nest-server
+  docker rm -f nest-server && docker run -d -p 3000:8000 --name nest-server --network nginx-net nest-server
 }
 
 common_steps
